@@ -1,6 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition="false" />
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,9 +10,12 @@
     <AssemblyName>JaiDee-Optimize</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+    <!-- Use installed runtime assemblies when Developer Pack is not present -->
+    <!-- Prefer 64-bit (matches readme build command: Framework64\v4.0.30319\MSBuild.exe) -->
+    <FrameworkPathOverride Condition="!Exists('$(ProgramFiles(x86))\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8') AND Exists('$(WINDIR)\Microsoft.NET\Framework64\v4.0.30319')">$(WINDIR)\Microsoft.NET\Framework64\v4.0.30319\</FrameworkPathOverride>
+    <FrameworkPathOverride Condition="!Exists('$(ProgramFiles(x86))\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8') AND !Exists('$(WINDIR)\Microsoft.NET\Framework64\v4.0.30319')">$(WINDIR)\Microsoft.NET\Framework\v4.0.30319\</FrameworkPathOverride>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -57,9 +60,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\app.manifest" />
-  </ItemGroup>
+
   <ItemGroup>
     <Content Include="Assets\Fonts\*.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
