@@ -1,11 +1,11 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("optimizOR")]
+[assembly: AssemblyTitle("JaiDee-Optimize")]
 [assembly: AssemblyDescription("Windows Gaming Optimizer")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("optimizOR")]
+[assembly: AssemblyProduct("JaiDee-Optimize")]
 [assembly: AssemblyCopyright("Copyright 2026")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -1,6 +1,6 @@
 # Fonts
 
-Place bundled font files here if you want optimizOR to use them without requiring system installation.
+Place bundled font files here if you want JaiDee-Optimize to use them without requiring system installation.
 
 Recommended files:
 
@@ -11,4 +11,4 @@ Recommended files:
 - `Roboto-Medium.ttf`
 - `Roboto-Bold.ttf`
 
-At runtime, optimizOR checks this folder first, then installed Windows fonts, then falls back to `Leelawadee UI` for Thai or `Segoe UI` for English.
+At runtime, JaiDee-Optimize checks this folder first, then installed Windows fonts, then falls back to `Leelawadee UI` for Thai or `Segoe UI` for English.

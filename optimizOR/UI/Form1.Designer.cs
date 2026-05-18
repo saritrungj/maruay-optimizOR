@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -18,6 +18,11 @@ namespace optimizOR.UI
         private Panel grpMemory;
         private Panel grpIniTweaks;
         private Panel grpDebloat;
+        private TabControl tabDebloat;
+        private TabPage tabWin10Debloat;
+        private TabPage tabWin11Debloat;
+        private FlowLayoutPanel flpWin10Debloat;
+        private FlowLayoutPanel flpWin11Debloat;
         private CheckBox chkWinPriority;
         private CheckBox chkMMCSS_GamePriority;
         private CheckBox chkMMCSS_HighCategory;
@@ -100,45 +105,50 @@ namespace optimizOR.UI
             this.chkMMCSS_HighCategory = new ToggleSwitch();
             this.chkMMCSS_GPUPriority = new ToggleSwitch();
             this.chkMMCSS_Responsiveness = new ToggleSwitch();
-            this.btnInfoWinPriority = new Button();
-            this.btnInfoMMCSS_GamePriority = new Button();
-            this.btnInfoMMCSS_HighCategory = new Button();
-            this.btnInfoMMCSS_GPUPriority = new Button();
-            this.btnInfoMMCSS_Responsiveness = new Button();
+            this.btnInfoWinPriority = new RoundedButton();
+            this.btnInfoMMCSS_GamePriority = new RoundedButton();
+            this.btnInfoMMCSS_HighCategory = new RoundedButton();
+            this.btnInfoMMCSS_GPUPriority = new RoundedButton();
+            this.btnInfoMMCSS_Responsiveness = new RoundedButton();
             this.grpLatency = new Panel();
             this.chkNetworkThrottle = new ToggleSwitch();
             this.chkZeroTimeSlice = new ToggleSwitch();
             this.chkDynamicTick = new ToggleSwitch();
-            this.btnInfoNetworkThrottle = new Button();
-            this.btnInfoZeroTimeSlice = new Button();
-            this.btnInfoDynamicTick = new Button();
+            this.btnInfoNetworkThrottle = new RoundedButton();
+            this.btnInfoZeroTimeSlice = new RoundedButton();
+            this.btnInfoDynamicTick = new RoundedButton();
             this.grpMemory = new Panel();
             this.chkDisablePaging = new ToggleSwitch();
             this.chkLargeSystemCache = new ToggleSwitch();
             this.chkMitigations = new ToggleSwitch();
-            this.btnInfoDisablePaging = new Button();
-            this.btnInfoLargeSystemCache = new Button();
-            this.btnInfoMitigations = new Button();
+            this.btnInfoDisablePaging = new RoundedButton();
+            this.btnInfoLargeSystemCache = new RoundedButton();
+            this.btnInfoMitigations = new RoundedButton();
             this.grpIniTweaks = new Panel();
             this.chkIniIRQ = new ToggleSwitch();
             this.chkIniMinSPs = new ToggleSwitch();
             this.chkIniWinLoad = new ToggleSwitch();
-            this.btnInfoIniIRQ = new Button();
-            this.btnInfoIniMinSPs = new Button();
-            this.btnInfoIniWinLoad = new Button();
+            this.btnInfoIniIRQ = new RoundedButton();
+            this.btnInfoIniMinSPs = new RoundedButton();
+            this.btnInfoIniWinLoad = new RoundedButton();
             this.grpDebloat = new Panel();
+            this.tabDebloat = new TabControl();
+            this.tabWin10Debloat = new TabPage();
+            this.tabWin11Debloat = new TabPage();
+            this.flpWin10Debloat = new FlowLayoutPanel();
+            this.flpWin11Debloat = new FlowLayoutPanel();
             this.chkDebloatConsumerApps = new ToggleSwitch();
             this.chkDebloatXbox = new ToggleSwitch();
             this.chkDebloatTeamsChat = new ToggleSwitch();
             this.chkDebloatWidgets = new ToggleSwitch();
             this.chkDebloatSuggestions = new ToggleSwitch();
             this.chkDebloatOneDriveStartup = new ToggleSwitch();
-            this.btnInfoDebloatConsumerApps = new Button();
-            this.btnInfoDebloatXbox = new Button();
-            this.btnInfoDebloatTeamsChat = new Button();
-            this.btnInfoDebloatWidgets = new Button();
-            this.btnInfoDebloatSuggestions = new Button();
-            this.btnInfoDebloatOneDriveStartup = new Button();
+            this.btnInfoDebloatConsumerApps = new RoundedButton();
+            this.btnInfoDebloatXbox = new RoundedButton();
+            this.btnInfoDebloatTeamsChat = new RoundedButton();
+            this.btnInfoDebloatWidgets = new RoundedButton();
+            this.btnInfoDebloatSuggestions = new RoundedButton();
+            this.btnInfoDebloatOneDriveStartup = new RoundedButton();
             this.pnlActions = new Panel();
             this.btnApplyAll = new RoundedButton();
             this.btnRestoreDefaults = new RoundedButton();
@@ -161,7 +171,7 @@ namespace optimizOR.UI
             this.AutoScaleDimensions = new SizeF(7F, 15F);
             this.AutoScaleMode = AutoScaleMode.Font;
             this.BackColor = ColorTranslator.FromHtml("#F5F8FF");
-            this.ClientSize = new Size(884, 661);
+            this.ClientSize = new Size(1100, 740);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.pnlActions);
             this.Controls.Add(this.pnlLog);
@@ -170,10 +180,10 @@ namespace optimizOR.UI
             this.ForeColor = ColorTranslator.FromHtml("#172033");
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.MinimumSize = new Size(900, 700);
+            this.MinimumSize = new Size(1116, 778);
             this.Name = "Form1";
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.Text = "optimizOR v1.0 - Windows Gaming Optimizer";
+            this.Text = "JaiDee-Optimize v1.0 - Windows Gaming Optimizer";
             this.Load += new System.EventHandler(this.Form1_Load);
             // 
             // pnlHeader
@@ -190,7 +200,7 @@ namespace optimizOR.UI
             this.pnlHeader.Location = new Point(0, 0);
             this.pnlHeader.Name = "pnlHeader";
             this.pnlHeader.Padding = new Padding(22, 16, 22, 10);
-            this.pnlHeader.Size = new Size(884, 78);
+            this.pnlHeader.Size = new Size(1100, 56);
             this.pnlHeader.TabIndex = 0;
             // 
             // 
@@ -205,13 +215,13 @@ namespace optimizOR.UI
             // lblAppTitle
             // 
             this.lblAppTitle.AutoSize = true;
-            this.lblAppTitle.Font = new Font("Segoe UI Semibold", 20F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+            this.lblAppTitle.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
             this.lblAppTitle.ForeColor = ColorTranslator.FromHtml("#0F172A");
             this.lblAppTitle.Location = new Point(68, 13);
             this.lblAppTitle.Name = "lblAppTitle";
-            this.lblAppTitle.Size = new Size(149, 37);
+            this.lblAppTitle.Size = new Size(251, 37);
             this.lblAppTitle.TabIndex = 1;
-            this.lblAppTitle.Text = "optimizOR";
+            this.lblAppTitle.Text = "JaiDee-Optimize";
             // 
             // lblSubtitle
             // 
@@ -227,7 +237,7 @@ namespace optimizOR.UI
             // lblLanguage
             // 
             this.lblLanguage.AutoSize = true;
-            this.lblLanguage.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            this.lblLanguage.Font = new Font("Segoe UI", 8.5F, FontStyle.Regular);
             this.lblLanguage.ForeColor = ColorTranslator.FromHtml("#64748B");
             this.lblLanguage.Location = new Point(566, 18);
             this.lblLanguage.Name = "lblLanguage";
@@ -255,7 +265,7 @@ namespace optimizOR.UI
             // lblTheme
             // 
             this.lblTheme.AutoSize = true;
-            this.lblTheme.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            this.lblTheme.Font = new Font("Segoe UI", 8.5F, FontStyle.Regular);
             this.lblTheme.ForeColor = ColorTranslator.FromHtml("#64748B");
             this.lblTheme.Location = new Point(566, 47);
             this.lblTheme.Name = "lblTheme";
@@ -270,7 +280,7 @@ namespace optimizOR.UI
             this.chkTheme.CheckState = CheckState.Unchecked;
             this.chkTheme.Cursor = Cursors.Hand;
             this.chkTheme.FlatStyle = FlatStyle.Flat;
-            this.chkTheme.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            this.chkTheme.Font = new Font("Segoe UI", 8.5F, FontStyle.Regular);
             this.chkTheme.ForeColor = ColorTranslator.FromHtml("#172033");
             this.chkTheme.Location = new Point(635, 43);
             this.chkTheme.Name = "chkTheme";
@@ -298,59 +308,60 @@ namespace optimizOR.UI
             // 
             // tweak groups
             // 
-            ConfigureGroup(this.grpPriority, "Priority & Scheduling", 18, 0, 516, 196);
-            ConfigureToggle(this.chkWinPriority, "chkWinPriority", "WinPriority", "Win32 priority separation", 18, 39, 0);
-            ConfigureToggle(this.chkMMCSS_GamePriority, "chkMMCSS_GamePriority", "MMCSS_GamePriority", "MMCSS game task priority", 18, 68, 1);
-            ConfigureToggle(this.chkMMCSS_HighCategory, "chkMMCSS_HighCategory", "MMCSS_HighCategory", "MMCSS scheduling category", 18, 97, 2);
-            ConfigureToggle(this.chkMMCSS_GPUPriority, "chkMMCSS_GPUPriority", "MMCSS_GPUPriority", "MMCSS GPU priority", 18, 126, 3);
-            ConfigureToggle(this.chkMMCSS_Responsiveness, "chkMMCSS_Responsiveness", "MMCSS_Responsiveness", "System responsiveness", 18, 155, 4);
-            ConfigureInfoButton(this.btnInfoWinPriority, "btnInfoWinPriority", "WinPriority", 470, 39, 20);
-            ConfigureInfoButton(this.btnInfoMMCSS_GamePriority, "btnInfoMMCSS_GamePriority", "MMCSS_GamePriority", 470, 68, 21);
-            ConfigureInfoButton(this.btnInfoMMCSS_HighCategory, "btnInfoMMCSS_HighCategory", "MMCSS_HighCategory", 470, 97, 22);
-            ConfigureInfoButton(this.btnInfoMMCSS_GPUPriority, "btnInfoMMCSS_GPUPriority", "MMCSS_GPUPriority", 470, 126, 23);
-            ConfigureInfoButton(this.btnInfoMMCSS_Responsiveness, "btnInfoMMCSS_Responsiveness", "MMCSS_Responsiveness", 470, 155, 24);
+            ConfigureGroup(this.grpPriority, "Priority & Scheduling", 18, 0, 516, 222);
+            ConfigureToggle(this.chkWinPriority, "chkWinPriority", "WinPriority", "Win32 priority separation", 18, 62, 0);
+            ConfigureToggle(this.chkMMCSS_GamePriority, "chkMMCSS_GamePriority", "MMCSS_GamePriority", "MMCSS game task priority", 18, 91, 1);
+            ConfigureToggle(this.chkMMCSS_HighCategory, "chkMMCSS_HighCategory", "MMCSS_HighCategory", "MMCSS scheduling category", 18, 120, 2);
+            ConfigureToggle(this.chkMMCSS_GPUPriority, "chkMMCSS_GPUPriority", "MMCSS_GPUPriority", "MMCSS GPU priority", 18, 149, 3);
+            ConfigureToggle(this.chkMMCSS_Responsiveness, "chkMMCSS_Responsiveness", "MMCSS_Responsiveness", "System responsiveness", 18, 178, 4);
+            ConfigureInfoButton(this.btnInfoWinPriority, "btnInfoWinPriority", "WinPriority", 470, 62, 20);
+            ConfigureInfoButton(this.btnInfoMMCSS_GamePriority, "btnInfoMMCSS_GamePriority", "MMCSS_GamePriority", 470, 91, 21);
+            ConfigureInfoButton(this.btnInfoMMCSS_HighCategory, "btnInfoMMCSS_HighCategory", "MMCSS_HighCategory", 470, 120, 22);
+            ConfigureInfoButton(this.btnInfoMMCSS_GPUPriority, "btnInfoMMCSS_GPUPriority", "MMCSS_GPUPriority", 470, 149, 23);
+            ConfigureInfoButton(this.btnInfoMMCSS_Responsiveness, "btnInfoMMCSS_Responsiveness", "MMCSS_Responsiveness", 470, 178, 24);
             this.grpPriority.Controls.AddRange(new Control[] { this.chkWinPriority, this.chkMMCSS_GamePriority, this.chkMMCSS_HighCategory, this.chkMMCSS_GPUPriority, this.chkMMCSS_Responsiveness, this.btnInfoWinPriority, this.btnInfoMMCSS_GamePriority, this.btnInfoMMCSS_HighCategory, this.btnInfoMMCSS_GPUPriority, this.btnInfoMMCSS_Responsiveness });
             // 
-            ConfigureGroup(this.grpLatency, "Latency & Timer", 18, 208, 516, 138);
-            ConfigureToggle(this.chkNetworkThrottle, "chkNetworkThrottle", "NetworkThrottle", "Network throttling", 18, 39, 5);
-            ConfigureToggle(this.chkZeroTimeSlice, "chkZeroTimeSlice", "ZeroTimeSlice", "IRQ priority boost", 18, 68, 6);
-            ConfigureToggle(this.chkDynamicTick, "chkDynamicTick", "DynamicTick", "Timer compatibility fix", 18, 97, 7);
-            ConfigureInfoButton(this.btnInfoNetworkThrottle, "btnInfoNetworkThrottle", "NetworkThrottle", 470, 39, 25);
-            ConfigureInfoButton(this.btnInfoZeroTimeSlice, "btnInfoZeroTimeSlice", "ZeroTimeSlice", 470, 68, 26);
-            ConfigureInfoButton(this.btnInfoDynamicTick, "btnInfoDynamicTick", "DynamicTick", 470, 97, 27);
+            ConfigureGroup(this.grpLatency, "Latency & Timer", 18, 236, 516, 160);
+            ConfigureToggle(this.chkNetworkThrottle, "chkNetworkThrottle", "NetworkThrottle", "Network throttling", 18, 62, 5);
+            ConfigureToggle(this.chkZeroTimeSlice, "chkZeroTimeSlice", "ZeroTimeSlice", "IRQ priority boost", 18, 91, 6);
+            ConfigureToggle(this.chkDynamicTick, "chkDynamicTick", "DynamicTick", "Timer compatibility fix", 18, 120, 7);
+            ConfigureInfoButton(this.btnInfoNetworkThrottle, "btnInfoNetworkThrottle", "NetworkThrottle", 470, 62, 25);
+            ConfigureInfoButton(this.btnInfoZeroTimeSlice, "btnInfoZeroTimeSlice", "ZeroTimeSlice", 470, 91, 26);
+            ConfigureInfoButton(this.btnInfoDynamicTick, "btnInfoDynamicTick", "DynamicTick", 470, 120, 27);
             this.grpLatency.Controls.AddRange(new Control[] { this.chkNetworkThrottle, this.chkZeroTimeSlice, this.chkDynamicTick, this.btnInfoNetworkThrottle, this.btnInfoZeroTimeSlice, this.btnInfoDynamicTick });
             // 
-            ConfigureGroup(this.grpMemory, "Memory & Security Tradeoffs", 18, 358, 516, 138);
-            ConfigureToggle(this.chkDisablePaging, "chkDisablePaging", "DisablePaging", "Disable paging executive", 18, 39, 8);
-            ConfigureToggle(this.chkLargeSystemCache, "chkLargeSystemCache", "LargeSystemCache", "Large system cache", 18, 68, 9);
-            ConfigureToggle(this.chkMitigations, "chkMitigations", "Mitigations", "Disable OS mitigations", 18, 97, 10);
-            ConfigureInfoButton(this.btnInfoDisablePaging, "btnInfoDisablePaging", "DisablePaging", 470, 39, 28);
-            ConfigureInfoButton(this.btnInfoLargeSystemCache, "btnInfoLargeSystemCache", "LargeSystemCache", 470, 68, 29);
-            ConfigureInfoButton(this.btnInfoMitigations, "btnInfoMitigations", "Mitigations", 470, 97, 30);
+            ConfigureGroup(this.grpMemory, "Memory & Security Tradeoffs", 18, 410, 516, 160);
+            ConfigureToggle(this.chkDisablePaging, "chkDisablePaging", "DisablePaging", "Disable paging executive", 18, 62, 8);
+            ConfigureToggle(this.chkLargeSystemCache, "chkLargeSystemCache", "LargeSystemCache", "Large system cache", 18, 91, 9);
+            ConfigureToggle(this.chkMitigations, "chkMitigations", "Mitigations", "Disable OS mitigations", 18, 120, 10);
+            ConfigureInfoButton(this.btnInfoDisablePaging, "btnInfoDisablePaging", "DisablePaging", 470, 62, 28);
+            ConfigureInfoButton(this.btnInfoLargeSystemCache, "btnInfoLargeSystemCache", "LargeSystemCache", 470, 91, 29);
+            ConfigureInfoButton(this.btnInfoMitigations, "btnInfoMitigations", "Mitigations", 470, 120, 30);
             this.grpMemory.Controls.AddRange(new Control[] { this.chkDisablePaging, this.chkLargeSystemCache, this.chkMitigations, this.btnInfoDisablePaging, this.btnInfoLargeSystemCache, this.btnInfoMitigations });
             // 
-            ConfigureGroup(this.grpIniTweaks, "Legacy INI Tweaks", 18, 508, 516, 138);
-            ConfigureToggle(this.chkIniIRQ, "chkIniIRQ", "IniIRQ", "SYSTEM.INI IRQ entry", 18, 39, 11);
-            ConfigureToggle(this.chkIniMinSPs, "chkIniMinSPs", "IniMinSPs", "SYSTEM.INI stack pages", 18, 68, 12);
-            ConfigureToggle(this.chkIniWinLoad, "chkIniWinLoad", "IniWinLoad", "WIN.INI load entry", 18, 97, 13);
-            ConfigureInfoButton(this.btnInfoIniIRQ, "btnInfoIniIRQ", "IniIRQ", 470, 39, 31);
-            ConfigureInfoButton(this.btnInfoIniMinSPs, "btnInfoIniMinSPs", "IniMinSPs", 470, 68, 32);
-            ConfigureInfoButton(this.btnInfoIniWinLoad, "btnInfoIniWinLoad", "IniWinLoad", 470, 97, 33);
+            ConfigureGroup(this.grpIniTweaks, "Legacy INI Tweaks", 18, 584, 516, 160);
+            ConfigureToggle(this.chkIniIRQ, "chkIniIRQ", "IniIRQ", "SYSTEM.INI IRQ entry", 18, 62, 11);
+            ConfigureToggle(this.chkIniMinSPs, "chkIniMinSPs", "IniMinSPs", "SYSTEM.INI stack pages", 18, 91, 12);
+            ConfigureToggle(this.chkIniWinLoad, "chkIniWinLoad", "IniWinLoad", "WIN.INI load entry", 18, 120, 13);
+            ConfigureInfoButton(this.btnInfoIniIRQ, "btnInfoIniIRQ", "IniIRQ", 470, 62, 31);
+            ConfigureInfoButton(this.btnInfoIniMinSPs, "btnInfoIniMinSPs", "IniMinSPs", 470, 91, 32);
+            ConfigureInfoButton(this.btnInfoIniWinLoad, "btnInfoIniWinLoad", "IniWinLoad", 470, 120, 33);
             this.grpIniTweaks.Controls.AddRange(new Control[] { this.chkIniIRQ, this.chkIniMinSPs, this.chkIniWinLoad, this.btnInfoIniIRQ, this.btnInfoIniMinSPs, this.btnInfoIniWinLoad });
             // 
-            ConfigureGroup(this.grpDebloat, "Windows Debloat", 18, 658, 516, 225);
-            ConfigureToggle(this.chkDebloatConsumerApps, "chkDebloatConsumerApps", "DebloatConsumerApps", "Remove bundled consumer apps", 18, 39, 34);
-            ConfigureToggle(this.chkDebloatXbox, "chkDebloatXbox", "DebloatXbox", "Remove Xbox companion apps", 18, 68, 35);
-            ConfigureToggle(this.chkDebloatTeamsChat, "chkDebloatTeamsChat", "DebloatTeamsChat", "Remove Teams Chat", 18, 97, 36);
-            ConfigureToggle(this.chkDebloatWidgets, "chkDebloatWidgets", "DebloatWidgets", "Disable Widgets and News", 18, 126, 37);
-            ConfigureToggle(this.chkDebloatSuggestions, "chkDebloatSuggestions", "DebloatSuggestions", "Disable ads and suggestions", 18, 155, 38);
-            ConfigureToggle(this.chkDebloatOneDriveStartup, "chkDebloatOneDriveStartup", "DebloatOneDriveStartup", "Disable OneDrive startup", 18, 184, 39);
-            ConfigureInfoButton(this.btnInfoDebloatConsumerApps, "btnInfoDebloatConsumerApps", "DebloatConsumerApps", 470, 39, 40);
-            ConfigureInfoButton(this.btnInfoDebloatXbox, "btnInfoDebloatXbox", "DebloatXbox", 470, 68, 41);
-            ConfigureInfoButton(this.btnInfoDebloatTeamsChat, "btnInfoDebloatTeamsChat", "DebloatTeamsChat", 470, 97, 42);
-            ConfigureInfoButton(this.btnInfoDebloatWidgets, "btnInfoDebloatWidgets", "DebloatWidgets", 470, 126, 43);
-            ConfigureInfoButton(this.btnInfoDebloatSuggestions, "btnInfoDebloatSuggestions", "DebloatSuggestions", 470, 155, 44);
-            ConfigureInfoButton(this.btnInfoDebloatOneDriveStartup, "btnInfoDebloatOneDriveStartup", "DebloatOneDriveStartup", 470, 184, 45);
+            ConfigureGroup(this.grpDebloat, "Windows Debloat", 18, 758, 516, 360);
+            ConfigureDebloatTabs();
+            ConfigureToggle(this.chkDebloatConsumerApps, "chkDebloatConsumerApps", "DebloatConsumerApps", "Remove bundled consumer apps", 18, 62, 34);
+            ConfigureToggle(this.chkDebloatXbox, "chkDebloatXbox", "DebloatXbox", "Remove Xbox companion apps", 18, 91, 35);
+            ConfigureToggle(this.chkDebloatTeamsChat, "chkDebloatTeamsChat", "DebloatTeamsChat", "Remove Teams Chat", 18, 120, 36);
+            ConfigureToggle(this.chkDebloatWidgets, "chkDebloatWidgets", "DebloatWidgets", "Disable Widgets and News", 18, 149, 37);
+            ConfigureToggle(this.chkDebloatSuggestions, "chkDebloatSuggestions", "DebloatSuggestions", "Disable ads and suggestions", 18, 178, 38);
+            ConfigureToggle(this.chkDebloatOneDriveStartup, "chkDebloatOneDriveStartup", "DebloatOneDriveStartup", "Disable OneDrive startup", 18, 207, 39);
+            ConfigureInfoButton(this.btnInfoDebloatConsumerApps, "btnInfoDebloatConsumerApps", "DebloatConsumerApps", 470, 62, 40);
+            ConfigureInfoButton(this.btnInfoDebloatXbox, "btnInfoDebloatXbox", "DebloatXbox", 470, 91, 41);
+            ConfigureInfoButton(this.btnInfoDebloatTeamsChat, "btnInfoDebloatTeamsChat", "DebloatTeamsChat", 470, 120, 42);
+            ConfigureInfoButton(this.btnInfoDebloatWidgets, "btnInfoDebloatWidgets", "DebloatWidgets", 470, 149, 43);
+            ConfigureInfoButton(this.btnInfoDebloatSuggestions, "btnInfoDebloatSuggestions", "DebloatSuggestions", 470, 178, 44);
+            ConfigureInfoButton(this.btnInfoDebloatOneDriveStartup, "btnInfoDebloatOneDriveStartup", "DebloatOneDriveStartup", 470, 207, 45);
             this.chkDebloatConsumerApps.Checked = false;
             this.chkDebloatConsumerApps.CheckState = CheckState.Unchecked;
             this.chkDebloatXbox.Checked = false;
@@ -363,7 +374,8 @@ namespace optimizOR.UI
             this.chkDebloatSuggestions.CheckState = CheckState.Unchecked;
             this.chkDebloatOneDriveStartup.Checked = false;
             this.chkDebloatOneDriveStartup.CheckState = CheckState.Unchecked;
-            this.grpDebloat.Controls.AddRange(new Control[] { this.chkDebloatConsumerApps, this.chkDebloatXbox, this.chkDebloatTeamsChat, this.chkDebloatWidgets, this.chkDebloatSuggestions, this.chkDebloatOneDriveStartup, this.btnInfoDebloatConsumerApps, this.btnInfoDebloatXbox, this.btnInfoDebloatTeamsChat, this.btnInfoDebloatWidgets, this.btnInfoDebloatSuggestions, this.btnInfoDebloatOneDriveStartup });
+            this.grpDebloat.Controls.Add(this.tabDebloat);
+
             // 
             // pnlActions
             // 
@@ -477,14 +489,46 @@ namespace optimizOR.UI
             panel.TabStop = false;
             panel.Tag = title;
             panel.Paint += new PaintEventHandler(this.RoundedPanel_Paint);
+
+            // Category accent label — coloured pill for visual grouping
+            Label categoryBadge = new Label();
+            categoryBadge.AutoSize = true;
+            categoryBadge.BackColor = GetGroupAccentColor(title);
+            categoryBadge.Font = new Font("Segoe UI", 7.5F, FontStyle.Regular);
+            categoryBadge.ForeColor = ColorTranslator.FromHtml("#FFFFFF");
+            categoryBadge.Location = new Point(18, 12);
+            categoryBadge.Padding = new Padding(6, 2, 6, 2);
+            categoryBadge.Text = GetGroupBadgeText(title);
+            panel.Controls.Add(categoryBadge);
+
             Label heading = new Label();
             heading.AutoSize = true;
             heading.BackColor = ColorTranslator.FromHtml("#FFFFFF");
             heading.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             heading.ForeColor = ColorTranslator.FromHtml("#172033");
-            heading.Location = new Point(18, 13);
+            heading.Location = new Point(18, 34);
             heading.Text = title;
             panel.Controls.Add(heading);
+        }
+
+        private Color GetGroupAccentColor(string title)
+        {
+            if (title.Contains("Priority")) return ColorTranslator.FromHtml("#185FA5");
+            if (title.Contains("Latency")) return ColorTranslator.FromHtml("#0E8A5E");
+            if (title.Contains("Memory")) return ColorTranslator.FromHtml("#7C3AED");
+            if (title.Contains("INI")) return ColorTranslator.FromHtml("#B45309");
+            if (title.Contains("Debloat")) return ColorTranslator.FromHtml("#B91C1C");
+            return ColorTranslator.FromHtml("#374151");
+        }
+
+        private string GetGroupBadgeText(string title)
+        {
+            if (title.Contains("Priority")) return "SCHEDULER";
+            if (title.Contains("Latency")) return "TIMER";
+            if (title.Contains("Memory")) return "MEMORY";
+            if (title.Contains("INI")) return "LEGACY";
+            if (title.Contains("Debloat")) return "DEBLOAT";
+            return "TWEAK";
         }
 
         private void ConfigureToggle(CheckBox checkBox, string name, string tag, string text, int x, int y, int tabIndex)
@@ -540,6 +584,49 @@ namespace optimizOR.UI
             button.Text = text;
             button.UseVisualStyleBackColor = false;
         }
+
+        private void ConfigureDebloatTabs()
+        {
+            this.tabDebloat.Location = new Point(16, 42);
+            this.tabDebloat.Name = "tabDebloat";
+            this.tabDebloat.SelectedIndex = 0;
+            this.tabDebloat.Size = new Size(484, 276);
+            this.tabDebloat.TabIndex = 34;
+
+            this.tabWin10Debloat.BackColor = ColorTranslator.FromHtml("#FFFFFF");
+            this.tabWin10Debloat.Location = new Point(4, 24);
+            this.tabWin10Debloat.Name = "tabWin10Debloat";
+            this.tabWin10Debloat.Padding = new Padding(6);
+            this.tabWin10Debloat.Size = new Size(476, 248);
+            this.tabWin10Debloat.TabIndex = 0;
+            this.tabWin10Debloat.Text = "Win10";
+
+            this.tabWin11Debloat.BackColor = ColorTranslator.FromHtml("#FFFFFF");
+            this.tabWin11Debloat.Location = new Point(4, 24);
+            this.tabWin11Debloat.Name = "tabWin11Debloat";
+            this.tabWin11Debloat.Padding = new Padding(6);
+            this.tabWin11Debloat.Size = new Size(476, 248);
+            this.tabWin11Debloat.TabIndex = 1;
+            this.tabWin11Debloat.Text = "Win11";
+
+            ConfigureDebloatFlow(this.flpWin10Debloat, "flpWin10Debloat");
+            ConfigureDebloatFlow(this.flpWin11Debloat, "flpWin11Debloat");
+            this.tabWin10Debloat.Controls.Add(this.flpWin10Debloat);
+            this.tabWin11Debloat.Controls.Add(this.flpWin11Debloat);
+            this.tabDebloat.Controls.Add(this.tabWin10Debloat);
+            this.tabDebloat.Controls.Add(this.tabWin11Debloat);
+        }
+
+        private void ConfigureDebloatFlow(FlowLayoutPanel panel, string name)
+        {
+            panel.AutoScroll = true;
+            panel.BackColor = ColorTranslator.FromHtml("#FFFFFF");
+            panel.Dock = DockStyle.Fill;
+            panel.FlowDirection = FlowDirection.TopDown;
+            panel.Name = name;
+            panel.Padding = new Padding(4, 6, 4, 6);
+            panel.WrapContents = false;
+        }
     }
 
     internal sealed class ToggleSwitch : CheckBox
@@ -585,12 +672,14 @@ namespace optimizOR.UI
             e.Graphics.Clear(this.BackColor);
 
             Color disabled = DisabledTextColor.IsEmpty ? ColorTranslator.FromHtml("#66706A") : DisabledTextColor;
+            Rectangle track = new Rectangle(this.Width - 46, 2, 36, 20);
+            Rectangle textBounds = new Rectangle(0, 1, track.Left - 8, this.Height - 2);
             using (Brush textBrush = new SolidBrush(this.Enabled ? this.ForeColor : disabled))
+            using (StringFormat textFormat = new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center, Trimming = StringTrimming.EllipsisCharacter })
             {
-                e.Graphics.DrawString(this.Text, this.Font, textBrush, new PointF(0, 3));
+                e.Graphics.DrawString(this.Text, this.Font, textBrush, textBounds, textFormat);
             }
 
-            Rectangle track = new Rectangle(this.Width - 58, 2, 48, 20);
             Color accent = AccentColor.IsEmpty ? ColorTranslator.FromHtml("#2563EB") : AccentColor;
             Color off = TrackOffColor.IsEmpty ? ColorTranslator.FromHtml("#D7E3F8") : TrackOffColor;
             Color knobOn = KnobOnColor.IsEmpty ? ColorTranslator.FromHtml("#102016") : KnobOnColor;
@@ -604,7 +693,7 @@ namespace optimizOR.UI
                 e.Graphics.FillPath(trackBrush, trackPath);
             }
 
-            int knobX = track.Left + 3 + (int)((track.Width - 20) * _position);
+            int knobX = track.Left + 3 + (int)(16 * _position);
             Rectangle knob = new Rectangle(knobX, track.Top + 3, 14, 14);
             using (Brush knobBrush = new SolidBrush(knobColor))
             {
@@ -681,7 +770,7 @@ namespace optimizOR.UI
                     int inset = (int)(8 * (1f - _pulse));
                     Rectangle pulseBounds = Rectangle.Inflate(bounds, -inset, -inset);
                     using (GraphicsPath pulsePath = RoundedRect(pulseBounds, 10))
-                    using (Pen pulsePen = new Pen(Color.FromArgb((int)(70 * _pulse), Color.White), 1))
+                    using (Pen pulsePen = new Pen(Color.FromArgb((int)(70 * _pulse), ColorTranslator.FromHtml("#F8FBFF")), 1))
                     {
                         pevent.Graphics.DrawPath(pulsePen, pulsePath);
                     }

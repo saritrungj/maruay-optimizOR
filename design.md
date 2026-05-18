@@ -1,379 +1,148 @@
-# design.md — Windows Gaming Optimizer: UI/UX Architecture
+# design.md - JaiDee-Optimize UI/UX Architecture
 
----
+## 1. Direction
 
-## 1. Design Philosophy
+JaiDee-Optimize uses a minimal system-utility layout with a liquid glass aesthetic. The UI should feel quiet, precise, and readable: soft translucent panels, rounded controls, restrained blue accents, and no all-caps button text.
 
-**Goal:** Make standard WinForms look sharp, dark, and functional — like a professional system utility — **without any external UI libraries** (no DevExpress, Telerik, MetroFramework, etc.).
+The app supports light and dark themes. Every visual color must come from the theme palette in `Form1.ThemePalette`, with automatic adaptation when the theme toggle changes.
 
-**Aesthetic Direction:** *Industrial / Dark Utility* — Dark charcoal background, sharp neon-green accent, monospace log font. Think system-level tool, not a consumer app. Clean, dense, purposeful.
+## 2. Window
 
----
+| Property | Value |
+|---|---|
+| Size | `820 x 620` client area |
+| Resize | Fixed single window |
+| Sidebar | `64px` icon-only navigation |
+| Topbar | `48px` with page title, subtitle, OS profile badge |
+| Content | Scrollable page area with `20px` padding |
 
-## 2. Form Properties (`Form1`)
+## 3. Palette
 
-| Property | Value | Rationale |
+| Token | Light | Dark |
 |---|---|---|
-| `Name` | `Form1` | Standard |
-| `Text` | `WinGameOpt v1.0 — Windows Gaming Optimizer` | Clear, versioned title |
-| `Size` | `820, 640` | Comfortable without being oversized |
-| `MinimumSize` | `820, 640` | Prevent UI collapse |
-| `MaximizeBox` | `false` | Fixed layout, no maximize needed |
-| `FormBorderStyle` | `FixedSingle` | Prevents resize, cleaner look |
-| `StartPosition` | `CenterScreen` | Professional default |
-| `BackColor` | `#1A1A1A` (Color from Hex) | Deep charcoal base |
-| `ForeColor` | `#E0E0E0` | Soft white text |
-| `Font` | `Segoe UI, 9pt, Regular` | Crisp, Windows-native |
-| `Icon` | Embedded `.ico` resource | Professional branding |
-| `ShowIcon` | `true` | |
+| Base | `#F8F9FC` | `#0F1117` |
+| Surface | `#FFFFFF` | `#161922` |
+| Raised | `#F1F4F9` | `#1E2230` |
+| Glass | `rgba(0,0,0,0.04)` | `rgba(255,255,255,0.06)` |
+| Glass border | `rgba(0,0,0,0.08)` | `rgba(255,255,255,0.12)` |
+| Glass hover | `rgba(0,0,0,0.06)` | `rgba(255,255,255,0.10)` |
+| Accent | `#185FA5` | `#2D8EFF` |
+| Accent dim | `#0C3D73` | `#1A5FA8` |
+| Accent tint | `rgba(24,95,165,0.08)` | `rgba(45,142,255,0.12)` |
+| Warning | `#FF6B00` | `#FF6B00` |
+| Text | `#111318` | `#F0F0F0` |
+| Muted | `#6B7280` | `#8A8FA8` |
+| Log bg | `#F4F5F7` | `#08090D` |
 
-**Applying Dark Background in WinForms (no library needed):**
-```csharp
-this.BackColor = ColorTranslator.FromHtml("#1A1A1A");
-this.ForeColor = ColorTranslator.FromHtml("#E0E0E0");
+Log levels:
+
+- OK: `#2D8EFF`
+- WARN: `#FFD700`
+- ERR: `#FF4444`
+- INFO: `#6A9FD8`
+
+## 4. Typography
+
+Use the system stack where available: `Segoe UI`, `Inter`, `-apple-system`, sans-serif. Use `Consolas` or `Fira Code` for logs.
+
+| Role | Size | Weight |
+|---|---:|---:|
+| Meta/label | 11px | 400 |
+| Description | 12px | 400 |
+| Body | 13px | 400 |
+| Button | 12-14px | 500-equivalent |
+| Heading | 18-20px | 500-equivalent |
+
+Avoid heavy bold weights. In WinForms, prefer `FontStyle.Regular` when a true medium weight is unavailable.
+
+## 5. Layout
+
+```text
+Sidebar 64px
+  Logo mark 36x36, radius 10
+  Nav: Home, Tweaks, Log
+  Utility nav: Settings, About
+
+Main
+  Topbar 48px
+    Page title + subtitle
+    OS profile badge
+  Content
+    HOME
+    TWEAKS
+    LOG
+    SETTINGS
+    ABOUT
 ```
 
----
+Navigation swaps pages instantly with no page-transition animation.
 
-## 3. Color Scheme
+## 6. Pages
 
-| Role | Hex | Usage |
-|---|---|---|
-| Background (Deep) | `#1A1A1A` | Form background, GroupBox background |
-| Background (Surface) | `#242424` | Panel backgrounds, GroupBox inner |
-| Background (Raised) | `#2E2E2E` | Button normal state, CheckBox area |
-| Accent (Primary) | `#39FF14` | Apply All button, success log, active checkbox tick |
-| Accent (Secondary) | `#FF6B00` | Warning states, Restore button |
-| Border / Separator | `#3A3A3A` | GroupBox borders, panel edges |
-| Text (Primary) | `#E8E8E8` | Labels, checkbox text |
-| Text (Muted) | `#888888` | Descriptions, hints |
-| Text (Log Info) | `#B0B0B0` | Log info messages |
-| Text (Log Success) | `#39FF14` | Log success messages |
-| Text (Log Warning) | `#FFD700` | Log warning messages |
-| Text (Log Error) | `#FF4444` | Log error messages |
+HOME:
 
----
+- Hero glass panel with 72x72 blue-tinted lightning mark
+- Title: `Optimize your system`
+- Subtitle: `Tweaks ready, [OS profile] loaded`
+- Primary CTA: `Optimize now`
+- Stats row: active tweaks, OS profile, last run
+- Quick status panel for tweak groups
 
-## 4. Font Definitions
+TWEAKS:
 
-| Usage | Font | Size | Style |
-|---|---|---|---|
-| Form base / labels | `Segoe UI` | `9pt` | Regular |
-| GroupBox titles | `Segoe UI` | `9pt` | Bold |
-| Button text | `Segoe UI` | `9.5pt` | Bold |
-| Log output (`rtbLog`) | `Consolas` | `8.5pt` | Regular |
-| Header / Title label | `Segoe UI` | `13pt` | Bold |
-| Version / subtitle | `Segoe UI` | `8pt` | Regular (Italic) |
+- Glass cards for Priority & Scheduling, Latency & Timers, Memory & Paging, INI Tweaks, and Debloat
+- Each row uses label text plus a toggle switch
+- Bottom action row: `Apply selected`, `Restore defaults`, `Turn all on/off`
 
----
+LOG:
 
-## 5. Full Control Hierarchy & Layout
+- Glass log panel
+- Monospace log area
+- Actions: `Clear`, `Export .txt`
 
-```
-Form1 (820 x 640)
-│
-├── pnlHeader (Panel) — Top strip, 820 x 60
-│   ├── lblAppTitle (Label)         "⚡ WinGameOpt"
-│   └── lblSubtitle (Label)         "DPC Latency & Input Lag Optimizer | v1.0"
-│
-├── pnlMain (Panel) — Left column, 500 x 540
-│   │
-│   ├── grpPriority (GroupBox)      "⚙  Priority & Scheduling Tweaks"
-│   │   ├── chkWinPriority          "Optimize Win32PrioritySeparation (0x2E)"
-│   │   ├── chkMMCSS_GamePriority   "Boost MMCSS Game Task Priority"
-│   │   ├── chkMMCSS_HighCategory   "Set MMCSS Scheduling Category: High"
-│   │   ├── chkMMCSS_GPUPriority    "Set MMCSS GPU Priority (8)"
-│   │   └── chkMMCSS_Responsiveness "Set SystemResponsiveness to 0"
-│   │
-│   ├── grpLatency (GroupBox)       "⏱  Latency & Timer Tweaks"
-│   │   ├── chkNetworkThrottle      "Disable Network Throttling Index"
-│   │   ├── chkZeroTimeSlice        "Zero TimeSlice (IRQ8 Priority Boost)"
-│   │   └── chkDynamicTick          "Set RealTimeIsUniversal (Timer Fix)"
-│   │
-│   ├── grpMemory (GroupBox)        "🧠  Memory & Paging Tweaks"
-│   │   ├── chkDisablePaging        "Disable Paging Executive (Keep in RAM)"
-│   │   ├── chkLargeSystemCache     "Optimize Large System Cache (Gaming)"
-│   │   └── chkMitigations          "Disable OS Mitigations (Spectre/Meltdown)"
-│   │
-│   └── grpIniTweaks (GroupBox)     "📄  System.INI & Win.INI Tweaks"
-│       ├── chkIniIRQ               "Inject IRQ9=4 in [386Enh] (SYSTEM.INI)"
-│       ├── chkIniMinSPs            "Set MinSPs=4 in [386Enh] (SYSTEM.INI)"
-│       └── chkIniWinLoad           "Clear Win.INI Load= Entry"
-│
-├── pnlActions (Panel) — Below left column, 500 x 60
-│   ├── btnApplyAll (Button)        "✔  APPLY ALL TWEAKS"
-│   ├── btnRestoreDefaults (Button) "↩  RESTORE DEFAULTS"
-│   └── btnSelectAll (Button)       "☑  Select All"
-│
-└── pnlLog (Panel) — Right column, 300 x 540
-    ├── lblLogTitle (Label)         "📋 Operation Log"
-    ├── rtbLog (RichTextBox)        [Scrollable log output]
-    └── btnClearLog (Button)        "Clear Log"
-```
+SETTINGS:
 
----
+- OS profile selector: Windows 11 / Windows 10
+- Selected profile uses accent border and tint
+- Windows 10 uses orange badge styling
+- Preferences include language and theme toggles
 
-## 6. Control Specifications
+ABOUT:
 
-### 6.1 Header Panel (`pnlHeader`)
+- App identity block
+- Version, platform, requirements, backup behavior, active profile
+- Safety advisory
 
-```
-pnlHeader
-  Dock:    Top
-  Height:  60
-  BackColor: #242424
-  BorderStyle: None
-```
+## 7. Components
 
-```
-lblAppTitle
-  Text:      "⚡ WinGameOpt"
-  Font:      Segoe UI, 14pt, Bold
-  ForeColor: #39FF14
-  Location:  12, 14
-  AutoSize:  true
+Panels:
 
-lblSubtitle
-  Text:      "DPC Latency & Input Lag Optimizer  |  v1.0  |  Running as Administrator"
-  Font:      Segoe UI, 8pt, Italic
-  ForeColor: #888888
-  Location:  12, 38
-  AutoSize:  true
-```
+- Cards and panels use 12-14px radius
+- Glass fill plus 0.5-1px translucent border
 
----
+Buttons:
 
-### 6.2 GroupBox Styling (Applied to All GroupBoxes)
+- Radius: 10px
+- Primary: accent blue background, white text
+- Ghost: raised surface, glass border
+- Danger ghost: orange text, orange-tinted border
+- Text is sentence case
 
-Standard WinForms `GroupBox` does not natively support dark theming on its border/title. Use this approach:
+Toggle:
 
-```csharp
-// In Form1.cs — custom paint GroupBox borders
-private void PaintGroupBox(object sender, PaintEventArgs e) {
-    GroupBox box = sender as GroupBox;
-    e.Graphics.Clear(ColorTranslator.FromHtml("#1A1A1A"));
+- Track: 36x20px, 10px radius
+- Thumb: 14x14px white circle
+- Off: raised bg with glass border
+- On: accent-dim bg with accent border behavior where available
+- Transition: short and snappy
 
-    // Draw border
-    using (Pen pen = new Pen(ColorTranslator.FromHtml("#3A3A3A")))
-        e.Graphics.DrawRectangle(pen, 0, 10, box.Width - 1, box.Height - 11);
+OS badge:
 
-    // Draw title background + text
-    using (Brush brush = new SolidBrush(ColorTranslator.FromHtml("#1A1A1A")))
-        e.Graphics.FillRectangle(brush, 8, 0, box.Text.Length * 7 + 8, 16);
+- Pill-shaped rounded button in the topbar
+- Windows 11: blue tint
+- Windows 10: orange tint
+- Click navigates to Settings
 
-    using (Font f = new Font("Segoe UI", 9f, FontStyle.Bold))
-    using (Brush textBrush = new SolidBrush(ColorTranslator.FromHtml("#39FF14")))
-        e.Graphics.DrawString(box.Text, f, textBrush, 10, 1);
-}
-// Register: grpPriority.Paint += PaintGroupBox; (for each group)
-```
+## 8. Implementation Notes
 
-**GroupBox Layout Properties (all):**
-```
-BackColor:   #1A1A1A
-ForeColor:   #E0E0E0
-Font:        Segoe UI, 9pt, Bold
-Padding:     new Padding(10, 18, 10, 10)
-```
-
----
-
-### 6.3 CheckBox Controls (All Tweak Checkboxes)
-
-**Naming Convention:** `chk` + `CategoryPrefix` + `TweakName`  
-Examples: `chkWinPriority`, `chkMMCSS_GamePriority`, `chkIniIRQ`
-
-**Properties (applied uniformly):**
-```
-FlatStyle:    Flat
-BackColor:    #1A1A1A
-ForeColor:    #E0E0E0
-Font:         Segoe UI, 9pt
-Checked:      true (default — all tweaks pre-selected)
-Cursor:       Hand
-AutoSize:     true
-```
-
-**Override checkbox check-mark color (owner-draw):**
-```csharp
-// The neon green tick requires owner-drawn checkboxes:
-// Set Appearance = Appearance.Button with FlatStyle for full control,
-// OR use a CheckedListBox with DrawMode.OwnerDrawFixed for consistency.
-// Simpler approach: Accept system default tick and rely on the dark
-// background + ForeColor contrast for a clean look.
-```
-
----
-
-### 6.4 Buttons
-
-#### `btnApplyAll` — Primary Action
-```
-Text:         "✔  APPLY ALL TWEAKS"
-Size:         220, 42
-BackColor:    #39FF14
-ForeColor:    #0A0A0A
-Font:         Segoe UI, 10pt, Bold
-FlatStyle:    Flat
-FlatAppearance.BorderSize: 0
-Cursor:       Hand
-```
-
-Hover effect (manual, in `MouseEnter`/`MouseLeave`):
-```csharp
-btnApplyAll.MouseEnter += (s,e) => btnApplyAll.BackColor = ColorTranslator.FromHtml("#5FFF3A");
-btnApplyAll.MouseLeave += (s,e) => btnApplyAll.BackColor = ColorTranslator.FromHtml("#39FF14");
-```
-
-#### `btnRestoreDefaults` — Destructive / Warning Action
-```
-Text:         "↩  RESTORE DEFAULTS"
-Size:         180, 42
-BackColor:    #2E2E2E
-ForeColor:    #FF6B00
-Font:         Segoe UI, 9.5pt, Bold
-FlatStyle:    Flat
-FlatAppearance.BorderColor:  #FF6B00
-FlatAppearance.BorderSize:   1
-Cursor:       Hand
-```
-
-#### `btnSelectAll` — Utility
-```
-Text:         "☑  Select All"
-Size:         110, 42
-BackColor:    #2E2E2E
-ForeColor:    #B0B0B0
-Font:         Segoe UI, 9pt
-FlatStyle:    Flat
-FlatAppearance.BorderColor: #3A3A3A
-FlatAppearance.BorderSize:  1
-Cursor:       Hand
-```
-
-#### `btnClearLog` — Log Utility
-```
-Text:         "Clear Log"
-Size:         90, 26
-BackColor:    #2E2E2E
-ForeColor:    #888888
-Font:         Segoe UI, 8pt
-FlatStyle:    Flat
-FlatAppearance.BorderColor: #3A3A3A
-FlatAppearance.BorderSize:  1
-```
-
----
-
-### 6.5 Log Panel (`pnlLog` + `rtbLog`)
-
-```
-pnlLog
-  Width:      290
-  Dock:       Right
-  BackColor:  #1A1A1A
-  Padding:    8
-
-lblLogTitle
-  Text:       "📋  Operation Log"
-  Font:       Segoe UI, 9pt, Bold
-  ForeColor:  #888888
-
-rtbLog
-  Name:       rtbLog
-  Dock:       Fill (within pnlLog, minus title area)
-  BackColor:  #0F0F0F
-  ForeColor:  #B0B0B0
-  Font:       Consolas, 8.5pt
-  ReadOnly:   true
-  BorderStyle: None
-  ScrollBars: Vertical
-  WordWrap:   true
-```
-
----
-
-## 7. Layout Diagram (ASCII)
-
-```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│  ⚡ WinGameOpt                                            [Dark Header #242424]  │
-│  DPC Latency & Input Lag Optimizer  |  v1.0  |  Running as Administrator        │
-├────────────────────────────────────────────────┬────────────────────────────────┤
-│  ┌──────────────────────────────────────────┐  │  📋 Operation Log         [Clr]│
-│  │ ⚙  Priority & Scheduling Tweaks          │  │                                │
-│  │  ☑ Optimize Win32PrioritySeparation      │  │ [HH:mm:ss] [INFO] App started  │
-│  │  ☑ Boost MMCSS Game Task Priority        │  │ [HH:mm:ss] [OK]   WinPriority  │
-│  │  ☑ Set MMCSS Scheduling Category: High  │  │ [HH:mm:ss] [WARN] INI missing  │
-│  │  ☑ Set MMCSS GPU Priority (8)           │  │ [HH:mm:ss] [ERR] Access denied │
-│  │  ☑ Set SystemResponsiveness to 0        │  │                                │
-│  └──────────────────────────────────────────┘  │                                │
-│  ┌──────────────────────────────────────────┐  │                                │
-│  │ ⏱  Latency & Timer Tweaks               │  │                                │
-│  │  ☑ Disable Network Throttling Index     │  │                                │
-│  │  ☑ Zero TimeSlice (IRQ8 Priority)       │  │                                │
-│  │  ☑ Set RealTimeIsUniversal              │  │                                │
-│  └──────────────────────────────────────────┘  │                                │
-│  ┌──────────────────────────────────────────┐  │                                │
-│  │ 🧠  Memory & Paging Tweaks              │  │                                │
-│  │  ☑ Disable Paging Executive             │  │                                │
-│  │  ☑ Optimize Large System Cache          │  │                                │
-│  │  ☑ Disable OS Mitigations               │  │                                │
-│  └──────────────────────────────────────────┘  │                                │
-│  ┌──────────────────────────────────────────┐  │                                │
-│  │ 📄  System.INI & Win.INI Tweaks         │  │                                │
-│  │  ☑ Inject IRQ9=4 (SYSTEM.INI)          │  │                                │
-│  │  ☑ Set MinSPs=4   (SYSTEM.INI)          │  │                                │
-│  │  ☑ Clear Win.INI Load= Entry            │  │                                │
-│  └──────────────────────────────────────────┘  │                                │
-├────────────────────────────────────────────────┤                                │
-│  [✔ APPLY ALL TWEAKS]  [↩ RESTORE DEFAULTS]  [☑ Select All]                  │
-└─────────────────────────────────────────────────┴───────────────────────────────┘
-```
-
----
-
-## 8. Naming Conventions Summary
-
-| Control Type | Prefix | Example |
-|---|---|---|
-| Form | (none) | `Form1` |
-| Panel | `pnl` | `pnlHeader`, `pnlMain`, `pnlLog` |
-| GroupBox | `grp` | `grpPriority`, `grpMemory`, `grpIniTweaks` |
-| CheckBox | `chk` | `chkWinPriority`, `chkMitigations` |
-| Button | `btn` | `btnApplyAll`, `btnRestoreDefaults` |
-| Label | `lbl` | `lblAppTitle`, `lblSubtitle` |
-| RichTextBox | `rtb` | `rtbLog` |
-| ToolTip | `tip` | `tipMain` |
-
----
-
-## 9. ToolTip Descriptions
-
-Attach a single `ToolTip` component (`tipMain`) and set descriptions on each checkbox:
-
-```csharp
-tipMain.SetToolTip(chkWinPriority,
-    "Sets Win32PrioritySeparation to 0x2E.\nBoosts foreground process scheduling for games.");
-tipMain.SetToolTip(chkMitigations,
-    "Disables Spectre/Meltdown mitigations.\nIncreases performance. Use only on trusted hardware.");
-```
-
-**ToolTip Styling:**
-```csharp
-tipMain.BackColor = ColorTranslator.FromHtml("#242424");
-tipMain.ForeColor = ColorTranslator.FromHtml("#E0E0E0");
-tipMain.IsBalloon = false;
-tipMain.AutoPopDelay = 5000;
-```
-
----
-
-## 10. Accessibility & UX Details
-
-- All buttons have `TabIndex` set in logical flow order (top-to-bottom, left-to-right).
-- `btnApplyAll` is set as the `AcceptButton` for Enter-key support.
-- `rtbLog` auto-scrolls: call `rtbLog.ScrollToCaret()` after each log append.
-- A `ProgressBar` (`prgApply`) can optionally be shown during `ApplyAll` beneath the action buttons (hidden by default, shown only during operation).
-- Confirmation `MessageBox` before applying: `"Apply all selected tweaks? A restart may be required for some changes."` 
-- Confirmation `MessageBox` before restoring: `"This will restore all registry and INI values to their defaults. Continue?"` with `MessageBoxIcon.Warning`.
+WinForms does not support CSS variables or true blur-backed glass. The implementation approximates the spec with owner-drawn rounded panels, alpha-blended glass colors, theme palette tokens, and custom rounded button/toggle controls.

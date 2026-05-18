@@ -1,10 +1,10 @@
-# plan.md — Windows Gaming Optimizer: Project Roadmap & Logic
+﻿# plan.md — Windows Gaming Optimizer: Project Roadmap & Logic
 
 ---
 
 ## 1. Project Overview
 
-**Application Name:** WinGameOpt  
+**Application Name:** JaiDee-Optimize
 **Goal:** A standalone, lightweight Windows Forms application that applies targeted Windows Registry and INI file tweaks to reduce DPC Latency and Input Lag for gaming.  
 **Inspired by:** NEXR8 / NZTS style optimizers  
 **Distribution:** Single `.exe` (no installer required)
@@ -255,9 +255,9 @@ public enum TweakType { Registry, IniFile }
 ## 9. Folder Structure
 
 ```
-WinGameOpt/
-├── WinGameOpt.sln
-├── WinGameOpt/
+JaiDee-Optimize/
+├── JaiDee-Optimize.sln
+├── JaiDee-Optimize/
 │   ├── Properties/
 │   │   ├── app.manifest          ← UAC requireAdministrator
 │   │   └── AssemblyInfo.cs
@@ -274,5 +274,5 @@ WinGameOpt/
 │   │   ├── Form1.cs
 │   │   └── Form1.Designer.cs
 │   ├── Program.cs
-│   └── WinGameOpt.csproj
+│   └── JaiDee-Optimize.csproj
 ```
